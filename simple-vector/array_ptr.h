@@ -25,8 +25,21 @@ public:
     // Запрещаем копирование
     ArrayPtr(const ArrayPtr&) = delete;
 
+    // move constructor
+    ArrayPtr(ArrayPtr&& other) noexcept {
+        std::swap(raw_ptr_, other.raw_ptr_);
+    }
+
     // Запрещаем присваивание
     ArrayPtr& operator=(const ArrayPtr&) = delete;
+
+    // move assignment
+    ArrayPtr& operator=(ArrayPtr&& rhs) noexcept {
+        delete[] raw_ptr_;
+        raw_ptr_ = rhs.raw_ptr_;
+        rhs.raw_ptr_ = nullptr;
+        return *this;
+    }
 
     ~ArrayPtr() {
         delete[] raw_ptr_;

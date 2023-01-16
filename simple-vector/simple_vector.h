@@ -58,8 +58,9 @@ public:
 
     SimpleVector& operator=(SimpleVector&& rhs) noexcept {
         if (this != &rhs) {
-            auto moved_to(std::move(rhs));
-            swap(moved_to);
+            items_ = std::move(rhs.items_);
+            size_ = std::exchange(rhs.size_, 0);
+            capacity_ = std::exchange(rhs.capacity_, 0);
         }
         return *this;
     }
@@ -90,7 +91,7 @@ public:
 
     // Удаляет элемент вектора в указанной позиции
     Iterator Erase(ConstIterator pos) {
-        assert(!IsEmpty());
+        assert(cbegin() <= pos && pos < cend());
 
         const Iterator it = const_cast<Iterator>(pos);
         std::move(it + 1, end(), it);
@@ -105,7 +106,6 @@ public:
         std::swap(size_, other.size_);
         std::swap(capacity_, other.capacity_);
     }
-
 
     // Возвращает количество элементов в массиве
     size_t GetSize() const noexcept {
@@ -163,7 +163,7 @@ public:
             ArrayPtr<Type> new_items(new_capacity);
             std::move(begin(), end(), new_items.Get());
 
-            items_.swap(new_items);
+            items_ = std::move(new_items);
             capacity_ = new_capacity;
         }
         else {
@@ -184,7 +184,7 @@ public:
         ArrayPtr<Type> new_items(new_capacity);
         std::move(begin(), end(), new_items.Get());
 
-        items_.swap(new_items);
+        items_ = std::move(new_items);
         capacity_ = new_capacity;
     }
 
@@ -235,6 +235,8 @@ private:
     // вместимость вектора должна увеличиться вдвое, а для вектора вместимостью 0 стать равной 1
     template<typename T>
     Iterator Insert_(Iterator pos, T&& value) {
+        assert(begin() <= pos && pos <= end());
+
         const size_t insert_index = pos - begin();
 
         if (size_ < capacity_) {
@@ -253,8 +255,8 @@ private:
             // copy remaining values
             std::move(pos, end(), new_items.Get() + insert_index + 1);
 
-            // swap
-            items_.swap(new_items);
+            // move
+            items_ = std::move(new_items);
             capacity_ = new_capacity;
         }
         ++size_;
