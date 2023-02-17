@@ -4,34 +4,66 @@
 
 namespace tests {
 
-    class X {
-    public:
-        X();
+    namespace detail {
 
-        X(size_t num);
+        class X {
+        public:
+            X();
 
-        X(const X& other) = delete;
-        X& operator=(const X& other) = delete;
+            X(size_t num);
 
-        X(X&& other) noexcept;
+            X(const X& other) = delete;
+            X& operator=(const X& other) = delete;
 
-        X& operator=(X&& other) noexcept;
+            X(X&& other) noexcept;
 
-        size_t GetX() const;
+            X& operator=(X&& other) noexcept;
 
-    private:
-        size_t x_;
-    };
+            size_t GetX() const;
 
-    SimpleVector<int> GenerateVector(size_t size);
+        private:
+            size_t x_;
+        };
 
-    void TemporaryObjConstructor();
+        SimpleVector<int> GenerateVector(size_t size);
 
-    void TemporaryObjOperator();
+    }
 
-    void NamedMoveConstructor();
+    void DefaultConstructor();
 
-    void NamedMoveOperator();
+    void SizeConstructor();
+
+    void SizeValueConstructor();
+
+    void InitializerListConstructor();
+
+    void At();
+
+    void Clear();
+
+    void Resize();
+
+    void Iterate();
+
+    void PushBack();
+
+    void PopBack();
+
+    void CopyConstructor();
+
+    void Compare();
+
+    void Swap();
+
+    void CopyAssignment();
+    
+    void Insert();
+
+    void Erase();
+
+    void MoveConstructor();
+
+    void MoveAssignment();
 
     void NoncopiableMoveConstructor();
 
@@ -40,4 +72,5 @@ namespace tests {
     void NoncopiableInsert();
 
     void NoncopiableErase(); 
+
 }

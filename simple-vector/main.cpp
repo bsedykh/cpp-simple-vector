@@ -2,10 +2,24 @@
 #include "tests.h"
 
 int main() {
-    tests::TemporaryObjConstructor();
-    tests::TemporaryObjOperator();
-    tests::NamedMoveConstructor();
-    tests::NamedMoveOperator();
+    tests::DefaultConstructor();
+    tests::SizeConstructor();
+    tests::SizeValueConstructor();
+    tests::InitializerListConstructor();
+    tests::At();
+    tests::Clear();
+    tests::Resize();
+    tests::Iterate();
+    tests::PushBack();
+    tests::PopBack();
+    tests::CopyConstructor();
+    tests::Compare();
+    tests::Swap();
+    tests::CopyAssignment();
+    tests::Insert();
+    tests::Erase();
+    tests::MoveConstructor();
+    tests::MoveAssignment();
     tests::NoncopiableMoveConstructor();
     tests::NoncopiablePushBack();
     tests::NoncopiableInsert();
