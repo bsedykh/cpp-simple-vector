@@ -173,7 +173,7 @@ namespace tests {
             assert(v[1] == 42);
         }
 
-        // Если хватает места, PushBack не увеличивает Capacity
+        // Р•СЃР»Рё С…РІР°С‚Р°РµС‚ РјРµСЃС‚Р°, PushBack РЅРµ СѓРІРµР»РёС‡РёРІР°РµС‚ Capacity
         {    
             SimpleVector<int> v(2);
             v.Resize(1);
@@ -356,15 +356,15 @@ namespace tests {
             v.PushBack(detail::X(i));
         }
 
-        // в начало
+        // РІ РЅР°С‡Р°Р»Рѕ
         v.Insert(v.begin(), detail::X(size + 1));
         assert(v.GetSize() == size + 1);
         assert(v.begin()->GetX() == size + 1);
-        // в конец
+        // РІ РєРѕРЅРµС†
         v.Insert(v.end(), detail::X(size + 2));
         assert(v.GetSize() == size + 2);
         assert((v.end() - 1)->GetX() == size + 2);
-        // в середину
+        // РІ СЃРµСЂРµРґРёРЅСѓ
         v.Insert(v.begin() + 3, detail::X(size + 3));
         assert(v.GetSize() == size + 3);
         assert((v.begin() + 3)->GetX() == size + 3);

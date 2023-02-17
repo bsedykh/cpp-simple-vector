@@ -15,16 +15,16 @@ public:
 
     SimpleVector() noexcept = default;
 
-    // Создает вектор из size элементов, инициализированных значением по умолчанию
+    // РЎРѕР·РґР°РµС‚ РІРµРєС‚РѕСЂ РёР· size СЌР»РµРјРµРЅС‚РѕРІ, РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅРЅС‹С… Р·РЅР°С‡РµРЅРёРµРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
     explicit SimpleVector(size_t size) : items_(size), size_(size), capacity_(size) {
     }
 
-    // Создает вектор из size элементов, инициализированных значением value
+    // РЎРѕР·РґР°РµС‚ РІРµРєС‚РѕСЂ РёР· size СЌР»РµРјРµРЅС‚РѕРІ, РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅРЅС‹С… Р·РЅР°С‡РµРЅРёРµРј value
     SimpleVector(size_t size, const Type& value) : items_(size), size_(size), capacity_(size) {
         std::fill(begin(), end(), value);
     }
 
-    // Создает вектор из std::initializer_list
+    // РЎРѕР·РґР°РµС‚ РІРµРєС‚РѕСЂ РёР· std::initializer_list
     SimpleVector(std::initializer_list<Type> init) : items_(init.size()), size_(init.size()), capacity_(init.size()) {
         std::copy(init.begin(), init.end(), begin());
     }
@@ -54,8 +54,8 @@ public:
         return *this;
     }
 
-    // Добавляет элемент в конец вектора
-    // При нехватке места увеличивает вдвое вместимость вектора
+    // Р”РѕР±Р°РІР»СЏРµС‚ СЌР»РµРјРµРЅС‚ РІ РєРѕРЅРµС† РІРµРєС‚РѕСЂР°
+    // РџСЂРё РЅРµС…РІР°С‚РєРµ РјРµСЃС‚Р° СѓРІРµР»РёС‡РёРІР°РµС‚ РІРґРІРѕРµ РІРјРµСЃС‚РёРјРѕСЃС‚СЊ РІРµРєС‚РѕСЂР°
     void PushBack(const Type& item) {
         Insert_(end(), item);
     }
@@ -64,7 +64,7 @@ public:
         Insert_(end(), std::move(item));
     }
 
-    // Вставляет элемент в указанной позиции
+    // Р’СЃС‚Р°РІР»СЏРµС‚ СЌР»РµРјРµРЅС‚ РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїРѕР·РёС†РёРё
     Iterator Insert(ConstIterator pos, const Type& value) {
         return Insert_(const_cast<Iterator>(pos), value);
     }
@@ -73,13 +73,13 @@ public:
         return Insert_(const_cast<Iterator>(pos), std::move(value));
     }
 
-    // Удаляет последний элемент вектора
+    // РЈРґР°Р»СЏРµС‚ РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ РІРµРєС‚РѕСЂР°
     void PopBack() noexcept {
         assert(!IsEmpty());
         --size_;
     }
 
-    // Удаляет элемент вектора в указанной позиции
+    // РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚ РІРµРєС‚РѕСЂР° РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїРѕР·РёС†РёРё
     Iterator Erase(ConstIterator pos) {
         assert(cbegin() <= pos && pos < cend());
 
@@ -90,40 +90,40 @@ public:
         return it;
     }
 
-    // Обменивает значение с другим вектором
+    // РћР±РјРµРЅРёРІР°РµС‚ Р·РЅР°С‡РµРЅРёРµ СЃ РґСЂСѓРіРёРј РІРµРєС‚РѕСЂРѕРј
     void swap(SimpleVector& other) noexcept {
         items_.swap(other.items_);
         std::swap(size_, other.size_);
         std::swap(capacity_, other.capacity_);
     }
 
-    // Возвращает количество элементов в массиве
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РјР°СЃСЃРёРІРµ
     size_t GetSize() const noexcept {
         return size_;
     }
 
-    // Возвращает вместимость массива
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РІРјРµСЃС‚РёРјРѕСЃС‚СЊ РјР°СЃСЃРёРІР°
     size_t GetCapacity() const noexcept {
         return capacity_;
     }
 
-    // Сообщает, пустой ли массив
+    // РЎРѕРѕР±С‰Р°РµС‚, РїСѓСЃС‚РѕР№ Р»Рё РјР°СЃСЃРёРІ
     bool IsEmpty() const noexcept {
         return size_ == 0;
     }
 
-    // Возвращает ссылку на элемент с индексом index
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° СЌР»РµРјРµРЅС‚ СЃ РёРЅРґРµРєСЃРѕРј index
     Type& operator[](size_t index) noexcept {
         return items_[index];
     }
 
-    // Возвращает константную ссылку на элемент с индексом index
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅСЃС‚Р°РЅС‚РЅСѓСЋ СЃСЃС‹Р»РєСѓ РЅР° СЌР»РµРјРµРЅС‚ СЃ РёРЅРґРµРєСЃРѕРј index
     const Type& operator[](size_t index) const noexcept {
         return items_[index];
     }
 
-    // Возвращает константную ссылку на элемент с индексом index
-    // Выбрасывает исключение std::out_of_range, если index >= size
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅСЃС‚Р°РЅС‚РЅСѓСЋ СЃСЃС‹Р»РєСѓ РЅР° СЌР»РµРјРµРЅС‚ СЃ РёРЅРґРµРєСЃРѕРј index
+    // Р’С‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ std::out_of_range, РµСЃР»Рё index >= size
     Type& At(size_t index) {
         if (index >= size_) {
             throw std::out_of_range("index is out of range");
@@ -131,8 +131,8 @@ public:
         return items_[index];
     }
 
-    // Возвращает константную ссылку на элемент с индексом index
-    // Выбрасывает исключение std::out_of_range, если index >= size
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅСЃС‚Р°РЅС‚РЅСѓСЋ СЃСЃС‹Р»РєСѓ РЅР° СЌР»РµРјРµРЅС‚ СЃ РёРЅРґРµРєСЃРѕРј index
+    // Р’С‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ std::out_of_range, РµСЃР»Рё index >= size
     const Type& At(size_t index) const {
         if (index >= size_) {
             throw std::out_of_range("index is out of range");
@@ -140,13 +140,13 @@ public:
         return items_[index];
     }
 
-    // Обнуляет размер массива, не изменяя его вместимость
+    // РћР±РЅСѓР»СЏРµС‚ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°, РЅРµ РёР·РјРµРЅСЏСЏ РµРіРѕ РІРјРµСЃС‚РёРјРѕСЃС‚СЊ
     void Clear() noexcept {
         size_ = 0;
     }
 
-    // Изменяет размер массива.
-    // При увеличении размера новые элементы получают значение по умолчанию для типа Type
+    // РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°.
+    // РџСЂРё СѓРІРµР»РёС‡РµРЅРёРё СЂР°Р·РјРµСЂР° РЅРѕРІС‹Рµ СЌР»РµРјРµРЅС‚С‹ РїРѕР»СѓС‡Р°СЋС‚ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РґР»СЏ С‚РёРїР° Type
     void Resize(size_t new_size) {
         if (new_size > capacity_) {
             const size_t new_capacity = std::max(new_size, capacity_ * 2);
@@ -157,7 +157,7 @@ public:
             capacity_ = new_capacity;
         }
         else {
-            // Заполняем диапазон [size, new_size) значениями по умолчанию
+            // Р—Р°РїРѕР»РЅСЏРµРј РґРёР°РїР°Р·РѕРЅ [size, new_size) Р·РЅР°С‡РµРЅРёСЏРјРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
             for (size_t i = size_; i < new_size; ++i) {
                 items_[i] = Type();
             }
@@ -166,7 +166,7 @@ public:
         size_ = new_size;
     }
 
-    // Изменяет вместимость массива
+    // РР·РјРµРЅСЏРµС‚ РІРјРµСЃС‚РёРјРѕСЃС‚СЊ РјР°СЃСЃРёРІР°
     void Reserve(size_t new_capacity) {
         if (new_capacity <= capacity_) {
             return;
@@ -179,32 +179,32 @@ public:
         capacity_ = new_capacity;
     }
 
-    // Возвращает итератор на начало массива
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° РЅР°С‡Р°Р»Рѕ РјР°СЃСЃРёРІР°
     Iterator begin() noexcept {
         return items_.Get();
     }
 
-    // Возвращает итератор на элемент, следующий за последним
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° СЌР»РµРјРµРЅС‚, СЃР»РµРґСѓСЋС‰РёР№ Р·Р° РїРѕСЃР»РµРґРЅРёРј
     Iterator end() noexcept {
         return begin() + size_;
     }
 
-    // Возвращает константный итератор на начало массива
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ РЅР° РЅР°С‡Р°Р»Рѕ РјР°СЃСЃРёРІР°
     ConstIterator begin() const noexcept {
         return items_.Get();
     }
 
-    // Возвращает итератор на элемент, следующий за последним
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° СЌР»РµРјРµРЅС‚, СЃР»РµРґСѓСЋС‰РёР№ Р·Р° РїРѕСЃР»РµРґРЅРёРј
     ConstIterator end() const noexcept {
         return begin() + size_;
     }
 
-    // Возвращает константный итератор на начало массива
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ РЅР° РЅР°С‡Р°Р»Рѕ РјР°СЃСЃРёРІР°
     ConstIterator cbegin() const noexcept {
         return items_.Get();
     }
 
-    // Возвращает итератор на элемент, следующий за последним
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° СЌР»РµРјРµРЅС‚, СЃР»РµРґСѓСЋС‰РёР№ Р·Р° РїРѕСЃР»РµРґРЅРёРј
     ConstIterator cend() const noexcept {
         return begin() + size_;
     }
@@ -214,8 +214,8 @@ private:
     size_t size_ = 0;
     size_t capacity_ = 0;
 
-    // Вставляет значение value в позицию pos.
-    // Возвращает итератор на вставленное значение
+    // Р’СЃС‚Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РІ РїРѕР·РёС†РёСЋ pos.
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° РІСЃС‚Р°РІР»РµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
     template<typename T>
     Iterator Insert_(Iterator pos, T&& value) {
         assert(begin() <= pos && pos <= end());
